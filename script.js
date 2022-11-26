@@ -3,6 +3,7 @@ class Calculator{
         this.previousOperandTextElement = previousOperandTextElement;
         this.currentOperandTextElement = currentOperandTextElement;
         this.clear
+        this.currentOperand="";
     }
     clear(){
         this.currentOperand = ''
@@ -12,17 +13,27 @@ class Calculator{
     delete(){
         
     }
+
     appendNumber(number){
-     this.currentOperand = this.currentOperand.tostring() + number.tostring()  
+     if (number === '.' && this.currentOperand.includes('.')) return   
+     this.currentOperand = this.currentOperand.toString() + number.toString();   
     }
+
     chooseOperation(operation){
-        
+        if (this.currentOperand === '') return
+        if(this.previousOperand !==''){
+            this.compute()
+        }
+        this.operation = operation
+        this.previousOperand = this.currentOperand
+        this.currentOperand = ''
     }
     compute(){
         
     }
     updateDisplay(){
      this.currentOperandTextElement.innerText = this.currentOperand   
+     this.previousOperandTextElement.innerText = this.previousOperand  
     }    
 }
 
@@ -44,3 +55,10 @@ numberButtons.forEach(button =>{
         calculator.updateDisplay()
     })
 })
+operationButtons.forEach(button =>{
+    button.addEventListener('click',()=>{
+        calculator.chooseOperation(button.innerText)
+        calculator.updateDisplay()
+    })
+})
+equalButton
